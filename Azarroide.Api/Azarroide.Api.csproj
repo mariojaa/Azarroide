@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Azarroide.Domain\Azarroide.Domain.csproj" />
     <ProjectReference Include="..\Azarroide.Infra.Data\Azarroide.Infra.Data.csproj" />
   </ItemGroup>
 

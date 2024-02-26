@@ -1,4 +1,4 @@
-﻿namespace Azaroide.Domain.Enums
+﻿namespace Azarroide.Domain.Enums
 {
     public enum StatusSolicitacaoDeCompraEnum : int
     {

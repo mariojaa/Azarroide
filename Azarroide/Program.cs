@@ -1,8 +1,8 @@
-using Azarroide.Data;
 using Azarroide.Mapper;
 using Azarroide.Repository.Interface;
 using Azarroide.Repository;
 using Microsoft.EntityFrameworkCore;
+using Azarroide.Infra.Data.Context;
 
 namespace Azarroide
 {
@@ -14,7 +14,7 @@ namespace Azarroide
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<AzarroideDbContext>(options =>
+            builder.Services.AddDbContext<EmpresaDbContextApi>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
             });

@@ -1,4 +1,4 @@
-﻿using Azaroide.Domain.Enums;
+﻿using Azarroide.Domain.Enums;
 
 namespace Azarroide.Domain.Entities
 {

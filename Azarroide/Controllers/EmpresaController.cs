@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Azarroide.Data;
+using Azarroide.Domain.Entities;
+using Azarroide.Infra.Data.Context;
 using Azarroide.Models;
 using Azarroide.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EmpresaMVC.Controllers
+namespace Empresa.Controllers
 {
     public class EmpresaController : Controller
     {
@@ -12,9 +13,9 @@ namespace EmpresaMVC.Controllers
         private readonly IEmpresaCnpjRepository _empresaCnpjRepository;
         private readonly string API_ENDPOINT = "https://receitaws.com.br/v1/cnpj/";
         private readonly IMapper _mapper;
-        private readonly AzarroideDbContext _context;
+        private readonly EmpresaDbContextApi _context;
 
-        public EmpresaController(IEmpresaCnpjRepository empresaCnpjRepository, IMapper mapper, AzarroideDbContext context)
+        public EmpresaController(IEmpresaCnpjRepository empresaCnpjRepository, IMapper mapper, EmpresaDbContextApi context)
         {
             _httpClient = new HttpClient
             {
@@ -28,7 +29,7 @@ namespace EmpresaMVC.Controllers
         // Método para listar todas as empresas cadastradas
         public IActionResult ListarTodasEmpresasCadastradas()
         {
-            List<EmpresaModel> empresas = _empresaCnpjRepository.ListarTodasEmpresasCadastradas();
+            List<EmpresaEntitie> empresas = _empresaCnpjRepository.ListarTodasEmpresasCadastradas();
 
             return View(empresas);
         }
@@ -43,7 +44,7 @@ namespace EmpresaMVC.Controllers
         [HttpPost]
         public IActionResult BuscarEmpresaPorId(int id)
         {
-            EmpresaModel empresa = _empresaCnpjRepository.BuscarEmpresaPorId(id);
+            EmpresaEntitie empresa = _empresaCnpjRepository.BuscarEmpresaPorId(id);
 
             return View(empresa);
         }
@@ -56,9 +57,9 @@ namespace EmpresaMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AdicionarNovaEmpresa(EmpresaModel empresaModel)
+        public IActionResult AdicionarNovaEmpresa(EmpresaEntitie empresaEntitie)
         {
-            _empresaCnpjRepository.AdicionarNovaEmpresa(empresaModel);
+            _empresaCnpjRepository.AdicionarNovaEmpresa(empresaEntitie);
 
             return RedirectToAction("BuscarempresaPorCnpj");
         }
@@ -67,15 +68,15 @@ namespace EmpresaMVC.Controllers
         [HttpGet]
         public IActionResult AtualizarDadosDaEmpresa(int id)
         {
-            EmpresaModel empresa = _empresaCnpjRepository.BuscarEmpresaPorId(id);
+            EmpresaEntitie empresa = _empresaCnpjRepository.BuscarEmpresaPorId(id);
 
             return View(empresa);
         }
 
         [HttpPost]
-        public IActionResult AtualizarDadosDaEmpresa(EmpresaModel empresaModel, int id)
+        public IActionResult AtualizarDadosDaEmpresa(EmpresaEntitie empresaEntitie, int id)
         {
-            _empresaCnpjRepository.AtualizarDadosDaEmpresa(empresaModel, id);
+            _empresaCnpjRepository.AtualizarDadosDaEmpresa(empresaEntitie, id);
 
             return RedirectToAction("ListarTodasEmpresasCadastradas");
         }
@@ -105,7 +106,7 @@ namespace EmpresaMVC.Controllers
         [HttpPost]
         public IActionResult BuscarEmpresaPorNome(string nome)
         {
-            EmpresaModel empresa = _empresaCnpjRepository.BuscarEmpresaPorNome(nome);
+            EmpresaEntitie empresa = _empresaCnpjRepository.BuscarEmpresaPorNome(nome);
 
             return View(empresa);
         }
@@ -125,7 +126,7 @@ namespace EmpresaMVC.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var viaEmpresaResponse = await response.Content.ReadFromJsonAsync<EmpresaModel>();
+                    var viaEmpresaResponse = await response.Content.ReadFromJsonAsync<EmpresaEntitie>();
 
                     if (viaEmpresaResponse != null)
                     {
@@ -152,10 +153,10 @@ namespace EmpresaMVC.Controllers
         }
         private bool EmpresaExistenteNoBancoDeDados(string cnpj) //Verifica se existe cadastro no banco
         {
-            return _context.Empresa.Any(p => p.cnpj == cnpj);
+            return _context.EmpresaEntitie.Any(p => p.cnpj == cnpj);
         }
         [HttpGet]
-        public async Task<IActionResult> Detalhes(string cnpj, EmpresaModel empresaModel) //Salva no Banco de dados
+        public async Task<IActionResult> Detalhes(string cnpj, EmpresaEntitie empresaEntitie) //Salva no Banco de dados
         {
             try
             {
@@ -163,17 +164,17 @@ namespace EmpresaMVC.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var viaEmpresaResponse = await response.Content.ReadFromJsonAsync<EmpresaModel>();
-                    empresaModel = viaEmpresaResponse;
-                    viaEmpresaResponse = _mapper.Map<EmpresaModel>(empresaModel);
+                    var viaEmpresaResponse = await response.Content.ReadFromJsonAsync<EmpresaEntitie>();
+                    empresaEntitie = viaEmpresaResponse;
+                    viaEmpresaResponse = _mapper.Map<EmpresaEntitie>(empresaEntitie);
 
-                    if (EmpresaExistenteNoBancoDeDados(empresaModel.cnpj)) //Verifica se existe cadastro no banco
+                    if (EmpresaExistenteNoBancoDeDados(empresaEntitie.cnpj)) //Verifica se existe cadastro no banco
                     {
                         return RedirectToAction("ListarTodasEmpresasCadastradas", "Empresa");
                     }
                     else
                     {
-                        _empresaCnpjRepository.AdicionarNovaEmpresa(empresaModel);
+                        _empresaCnpjRepository.AdicionarNovaEmpresa(empresaEntitie);
                         return View(viaEmpresaResponse);
                     }
 

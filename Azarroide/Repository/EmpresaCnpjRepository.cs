@@ -1,4 +1,5 @@
-﻿using Azarroide.Data;
+﻿using Azarroide.Domain.Entities;
+using Azarroide.Infra.Data.Context;
 using Azarroide.Models;
 using Azarroide.Repository.Interface;
 
@@ -6,22 +7,22 @@ namespace Azarroide.Repository
 {
     public class EmpresaCnpjRepository : IEmpresaCnpjRepository
     {
-        private readonly AzarroideDbContext _context;
-        public EmpresaCnpjRepository(AzarroideDbContext context)
+        private readonly EmpresaDbContextApi _context;
+        public EmpresaCnpjRepository(EmpresaDbContextApi context)
         {
             _context = context;
         }
 
-        public void AdicionarNovaEmpresa(EmpresaModel empresaModel)
+        public void AdicionarNovaEmpresa(EmpresaEntitie empresaEntitie)
         {
-            _context.Empresa.Add(empresaModel);
+            _context.EmpresaEntitie.Add(empresaEntitie);
             _context.SaveChanges();
         }
 
-        public EmpresaModel AtualizarDadosDaEmpresa(EmpresaModel empresaModel, int id)
+        public EmpresaEntitie AtualizarDadosDaEmpresa(EmpresaEntitie empresaEntitie, int id)
         {
-            EmpresaModel empresaPorId = BuscarEmpresaPorId(id);
-            if (empresaModel == null)
+            EmpresaEntitie empresaPorId = BuscarEmpresaPorId(id);
+            if (empresaEntitie == null)
             {
                 throw new Exception($"Empresa com Id {id}, não encontrada na base de dados do sistema local!");
             }
@@ -29,24 +30,24 @@ namespace Azarroide.Repository
             empresaPorId.email = empresaPorId.email;
             empresaPorId.telefone = empresaPorId.telefone;
 
-            _context.Empresa.Update(empresaPorId);
+            _context.EmpresaEntitie.Update(empresaPorId);
             _context.SaveChanges();
             return empresaPorId;
         }
 
-        public EmpresaModel BuscarEmpresaPorId(int id)
+        public EmpresaEntitie BuscarEmpresaPorId(int id)
         {
-            return _context.Empresa.FirstOrDefault(x => x.Id == id);
+            return _context.EmpresaEntitie.FirstOrDefault(x => x.Id == id);
         }
 
-        public EmpresaModel BuscarEmpresaPorCnpj(string cnpj)
+        public EmpresaEntitie BuscarEmpresaPorCnpj(string cnpj)
         {
-            return _context.Empresa.FirstOrDefault(x => x.cnpj == cnpj);
+            return _context.EmpresaEntitie.FirstOrDefault(x => x.cnpj == cnpj);
         }
 
-        public EmpresaModel BuscarEmpresaPorNome(string nome)
+        public EmpresaEntitie BuscarEmpresaPorNome(string nome)
         {
-            return _context.Empresa.FirstOrDefault(x => x.nome == nome);
+            return _context.EmpresaEntitie.FirstOrDefault(x => x.nome == nome);
         }
 
         public void DeletarEmpresa(int id)
@@ -54,14 +55,14 @@ namespace Azarroide.Repository
             var empresa = BuscarEmpresaPorId(id);
             if (empresa != null)
             {
-                _context.Empresa.Remove(empresa);
+                _context.EmpresaEntitie.Remove(empresa);
                 _context.SaveChanges();
             }
         }
 
-        public List<EmpresaModel> ListarTodasEmpresasCadastradas()
+        public List<EmpresaEntitie> ListarTodasEmpresasCadastradas()
         {
-            return _context.Empresa.ToList();
+            return _context.EmpresaEntitie.ToList();
         }
     }
 }
