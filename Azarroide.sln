@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azarroide.Infra.Data", "Azarroide.Infra.Data\Azarroide.Infra.Data.csproj", "{A3B03F50-68D0-44C8-A404-FC871FA7493D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azarroide.Infra.Data", "Azarroide.Infra.Data\Azarroide.Infra.Data.csproj", "{A3B03F50-68D0-44C8-A404-FC871FA7493D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azarroide.Domain", "Azarroide.Domain\Azarroide.Domain.csproj", "{ED0664FC-CBAE-4BB8-9D99-3FBA78B9506B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azarroide.Domain", "Azarroide.Domain\Azarroide.Domain.csproj", "{ED0664FC-CBAE-4BB8-9D99-3FBA78B9506B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azarroinde.Application", "Azarroinde.Application\Azarroinde.Application.csproj", "{783A350C-1D10-491F-9BE8-8AB476F41860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azarroide.Application", "Azarroinde.Application\Azarroide.Application.csproj", "{783A350C-1D10-491F-9BE8-8AB476F41860}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azarroide", "Azarroide\Azarroide.csproj", "{9D3543D3-81A7-4294-89D9-113D22640477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azarroide", "Azarroide\Azarroide.csproj", "{9D3543D3-81A7-4294-89D9-113D22640477}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azarroide.Api", "Azarroide.Api\Azarroide.Api.csproj", "{B294EC69-D1DF-4874-8174-236962A45F25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azarroide.Api", "Azarroide.Api\Azarroide.Api.csproj", "{B294EC69-D1DF-4874-8174-236962A45F25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

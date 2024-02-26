@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 
 namespace Azarroide.Api
 {
@@ -13,7 +14,12 @@ namespace Azarroide.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddDbContext<EmpresaDbContextApi>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Database"));
+            });
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<ICadastroDeProdutos, CadastroDeProdutosRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
