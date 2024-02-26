@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azarroide.Domain.Entities;
+using Azarroide.Infra.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AzaRRoide.API.Controllers
 {
