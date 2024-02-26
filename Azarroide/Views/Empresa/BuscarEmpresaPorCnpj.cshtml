@@ -1,0 +1,58 @@
+﻿@model Azarroide.Models.EmpresaModel
+
+<h2>Buscar Empresa por CNPJ</h2>
+
+<form method="post" id="buscarForm">
+    <div class="form-group">
+        <label for="cnpj">CNPJ:</label>
+        <input type="text" class="form-control" name="cnpj" id="cnpj" placeholder="Digite o CNPJ (somente números)" required>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="limparEChecarCnpj()">Buscar</button>
+</form>
+
+@if (Model != null)
+{
+    <h3>Resultado da Busca</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CNPJ</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.cnpj</td>
+                <td>@Model.nome</td>
+                <td>@Model.telefone</td>
+                <td>@Model.email</td>
+                <td>
+                    <a href="@Url.Action("Detalhes", new { cnpj = new String(Model.cnpj.Where(Char.IsDigit).ToArray()) })" class="btn btn-info">Detalhes</a>
+                    <form method="post" action="@Url.Action("SalvarEmpresa", "Empresa")">
+                        <input type="hidden" name="cnpj" value="@Model.cnpj" />
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script>
+    function limparEChecarCnpj() {
+        // Obter o valor atual do campo CNPJ
+        var cnpjInput = $('#cnpj');
+        var cnpj = cnpjInput.val();
+
+        // Remover caracteres indesejados (.,\,/,-)
+        cnpj = cnpj.replace(/[^\d]/g, '');
+
+        // Atualizar o valor do campo CNPJ
+        cnpjInput.val(cnpj);
+
+        // Enviar o formulário
+        $('#buscarForm').submit();
+    }
+</script>
