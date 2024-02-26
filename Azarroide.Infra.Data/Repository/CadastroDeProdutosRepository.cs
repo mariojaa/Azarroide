@@ -1,6 +1,6 @@
 ﻿using Azarroide.Domain.Entities;
+using Azarroide.Infra.Data.Context;
 using Azarroide.Infra.Data.Interfaces;
-using AzaRRoide.Infra.Data.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +22,7 @@ namespace Azarroide.Infra.Data.Repository
 
         public async Task AtualizarProdutoCadastrado(CadastroDeProdutosEntitie cadastroDeProdutos)
         {
-           _context.Entry(cadastroDeProdutos).State = EntityState.Modified;
+            _context.Entry(cadastroDeProdutos).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
@@ -34,7 +34,7 @@ namespace Azarroide.Infra.Data.Repository
         public async Task DeletarProdutoCadastrado(int id)
         {
             var cadastroDeProduto = await BuscarProdutoCadastradoPorId(id);
-            if(cadastroDeProduto != null)
+            if (cadastroDeProduto != null)
             {
                 _context.CadastroDeProdutos.Remove(cadastroDeProduto.Value);
                 await _context.SaveChangesAsync();

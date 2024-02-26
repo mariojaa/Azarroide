@@ -1,7 +1,7 @@
 ﻿using Azarroide.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AzaRRoide.Infra.Data.Context
+namespace Azarroide.Infra.Data.Context
 {
     public class EmpresaDbContextApi : DbContext
     {
@@ -9,7 +9,7 @@ namespace AzaRRoide.Infra.Data.Context
         {
 
         }
-        //public DbSet<EmpresaEntitie> EmpresaEntitie { get; set; }
+        public DbSet<EmpresaEntitie> EmpresaEntitie { get; set; }
         public DbSet<CadastroDeProdutosEntitie> CadastroDeProdutos { get; set; }
     }
 }

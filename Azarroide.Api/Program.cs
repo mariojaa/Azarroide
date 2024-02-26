@@ -1,6 +1,6 @@
+using Azarroide.Infra.Data.Context;
 using Azarroide.Infra.Data.Interfaces;
 using Azarroide.Infra.Data.Repository;
-using AzaRRoide.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
 namespace Azarroide.Api
